@@ -37,7 +37,7 @@ module.exports = {
 			})
 			on('playerDropped', (source, reason) => {
 				if (GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusPlayerNames') === 'true'){
-					playerCount.replace(source, '');
+					playerCount.replace(`‣ ${playerName} - <@${GetPlayerIdentifier(source, 3).substring(8)}>`, '');
 					statusEmbed.setDescription(`**Currently Connected Players**:\n\n${playerCount}`)
 				} else {
 					playerCount--;
