@@ -23,10 +23,12 @@ module.exports = {
 			playerCount = 0;
 			if (GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusPlayerNames') === 'true'){
 				playerCount = '';
+				nameString = '';
 			}
 			on('playerConnecting', (playerName, kickReason, deferrals) => {
 				if (GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusPlayerNames') === 'true'){
-					playerCount += `‣ ${playerName} - <@${GetPlayerIdentifier(source, 3).substring(8)}>`
+					nameString = `‣ ${playerName} - <@${GetPlayerIdentifier(source, 3).substring(8)}>`;
+					playerCount += nameString
 					statusEmbed.setDescription(`**Currently Connected Players**:\n\n${playerCount}`)
 					console.log(playerName)
 				} else {
@@ -37,7 +39,7 @@ module.exports = {
 			})
 			on('playerDropped', (source, reason) => {
 				if (GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusPlayerNames') === 'true'){
-					playerCount.replace(`‣ ${playerName} - <@${GetPlayerIdentifier(source, 3).substring(8)}>`, '');
+					playerCount.replace(nameString, '');
 					statusEmbed.setDescription(`**Currently Connected Players**:\n\n${playerCount}`)
 				} else {
 					playerCount--;
