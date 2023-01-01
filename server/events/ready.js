@@ -20,9 +20,10 @@ module.exports = {
 		let playerCount = [];
 		let players = '**Currently Connected Player(s)**:\n';
 		let nameString = '';
-		guildChannel.send({embeds: [statusEmbed]}).then(async sentMessage => {
+		await guildChannel.send({embeds: [statusEmbed]}).then(async sentMessage => {
 			client.statusMessage = await sentMessage;
 		});
+		await updateChannelName(0)
 		on('playerConnecting', (playerName, kickReason, deferrals) => {
 			playerCountNum++;
 			if (GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusPlayerNames') === 'true'){
@@ -58,20 +59,22 @@ module.exports = {
 			console.log(`Game event ${name} ${args.join(', ')}`)
 		})
 
-		updateChannelName(playerCountNum);
-
-		function updateChannelName(playerCountNum){
-			const guildStatusChannel = client.channels.cache.get(GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusChannelCount'));
+		async function updateChannelName(playerCountNum){
+			const guildStatusChannel = client.channels.cache.get(await GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusChannelCount'));
 			if (playerCountNum === 1){
-				guildStatusChannel.edit({ name: `🦲｜${playerCountNum}-player` });
+				await guildStatusChannel.edit({ name: `🦲｜${playerCountNum}-player` });
 			} else {
-				guildStatusChannel.edit({ name: `🦲｜${playerCountNum}-players` });
+				await guildStatusChannel.edit({ name: `🦲｜${playerCountNum}-players` });
 			}
 		}
 
 		function updatePlayerNames(players, statusEmbed) {
-			statusEmbed.setDescription(players)
-			client.statusMessage.edit({embeds: [statusEmbed]})
+			if (players === '**Currently Connected Player(s)**:\n'){
+				statusEmbed.setDescription('**There are currently no players connected!**');
+			} else {
+				statusEmbed.setDescription(players);
+			};
+			client.statusMessage.edit({embeds: [statusEmbed]});
 		}
 	},
 };
