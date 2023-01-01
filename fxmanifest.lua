@@ -32,3 +32,6 @@ DiscordStatusPlayerNames 'true'                                                 
 DiscordStatusEmbedTitle 'Concept Collective'                                                                        -- Discord message embed Title
 DiscordStatusEmbedURL 'https://conceptcollective.net'                                                               -- Discord message embed URL
 DiscordStatusEmbedThumbnail 'https://cdn.discordapp.com/attachments/672308435534086149/1053879929848209418/idk.png' -- Discord message embed Thumbnail
+
+supportChecker 'true'                                                                                               -- Automatic checker to help fix and problems you may be facing.
+versionChecker 'true'                                                                                               -- Automatic version checker to keep this script up-to-date

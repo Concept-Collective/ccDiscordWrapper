@@ -3,6 +3,9 @@ on("onResourceStart", (resourceName) => {
 	const path = require('node:path');
 	const root = GetResourcePath(GetCurrentResourceName());
 	const sv_config = require(path.join(root, 'env.js'));
+	if (GetCurrentResourceName() !== resourceName && GetResourceMetadata(GetCurrentResourceName(), 'supportChecker') == true) {
+		return console.warn(`^6[Warning]^0 For better support, it is recommended that "${GetCurrentResourceName()}" be renamed to "cc-chat"`);
+	}
 	if (GetResourceMetadata('cc-discordStatus', 'DiscordStatusEnabled') === 'true'){
 		const { Client, Collection, GatewayIntentBits } = require('discord.js');
 		const client = new Client({ intents: [GatewayIntentBits.Guilds] });
