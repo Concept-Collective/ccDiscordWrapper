@@ -5,7 +5,9 @@ module.exports = {
 	once: true,
 	async execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
-		const guildChannel = client.channels.cache.get(GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusChannelId'));
+		const guildChannel = await client.channels.cache.get(GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusChannelId'));
+		const guildStatusChannel = await client.channels.cache.get(GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusChannelCount'));
+
 		await guildChannel.bulkDelete(1).catch(e => console.warn('Failed to delete previous message - probably becuase there isn\'t one!'));
 		let statusEmbed = new client.discord.EmbedBuilder()
 			.setColor(0x0099FF)
@@ -23,8 +25,8 @@ module.exports = {
 		await guildChannel.send({embeds: [statusEmbed]}).then(async sentMessage => {
 			client.statusMessage = await sentMessage;
 		});
-		await updateChannelName(0)
-		on('playerConnecting', (playerName, kickReason, deferrals) => {
+		updateChannelName(0);
+		on('playerConnecting', async (playerName, kickReason, deferrals) => {
 			playerCountNum++;
 			if (GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusPlayerNames') === 'true'){
 				nameString = `‣ ${playerName} - <@${GetPlayerIdentifier(source, 3).substring(8)}>`;
@@ -59,12 +61,11 @@ module.exports = {
 			console.log(`Game event ${name} ${args.join(', ')}`)
 		})
 
-		async function updateChannelName(playerCountNum){
-			const guildStatusChannel = client.channels.cache.get(await GetResourceMetadata(GetCurrentResourceName(), 'DiscordStatusChannelCount'));
-			if (playerCountNum === 1){
-				await guildStatusChannel.edit({ name: `🦲｜${playerCountNum}-player` });
+		function updateChannelName(playerCountNumber){
+			if (playerCountNumber === 1){
+				guildStatusChannel.edit({ name: `🦲｜${playerCountNumber}-player` });
 			} else {
-				await guildStatusChannel.edit({ name: `🦲｜${playerCountNum}-players` });
+				guildStatusChannel.edit({ name: `🦲｜${playerCountNumber}-players` });
 			}
 		}
 

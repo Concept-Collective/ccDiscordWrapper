@@ -4,7 +4,7 @@ const root = GetResourcePath(GetCurrentResourceName());
 
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-let sv_config = require(path.join(root, 'env.js'));
+sv_config = require(path.join(root, 'env.js'));
 
 on("onResourceStart", (resourceName) => {
 	if (GetCurrentResourceName() !== "cc-discordStatus" && GetResourceMetadata(GetCurrentResourceName(), 'supportChecker') === 'true') {
