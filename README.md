@@ -8,7 +8,9 @@ CC-discordStatus is a modern open-source FiveM & RedM wrapper for interacting an
 
 ## Screenshots
 
-![Discord Player Count Startup GIF](https://i.gyazo.com/fbfd39cd3b310f795f88cc3df3e2ea38.gif)
+![Discord Player Count Startup](https://i.gyazo.com/fbfd39cd3b310f795f88cc3df3e2ea38.gif)
+![Discord Player Join Update](https://i.gyazo.com/c7140f4085e7a90adcd5f7ba973ba4e9.gif)
+![Discord Player Disconnect Update](https://i.gyazo.com/5f612dad9fecc0fe1356419751fe64b1.gif)
 
 
 ## Roadmap
