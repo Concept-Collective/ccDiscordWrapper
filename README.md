@@ -1,5 +1,5 @@
 
-![Logo](https://conceptcollective.net/img/CCLong-dark.png)
+![Logo](https://conceptcollective.net/img/CCLong-light.png)
 
 
 # CC-discordStatus 🤖
