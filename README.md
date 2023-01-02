@@ -11,7 +11,6 @@ CC-discordStatus is a modern open-source FiveM & RedM wrapper for interacting an
 <br>
   	<img src="https://i.gyazo.com/fbfd39cd3b310f795f88cc3df3e2ea38.gif">
    	<img src="https://i.gyazo.com/c7140f4085e7a90adcd5f7ba973ba4e9.gif">
-  	<img src="https://i.gyazo.com/5f612dad9fecc0fe1356419751fe64b1.gif">
 </br>
 </details>
 
