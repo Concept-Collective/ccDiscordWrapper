@@ -1,6 +1,4 @@
-
-![Logo](https://media.discordapp.net/attachments/1054586742042275960/1060378296686231614/Comp_2.gif)
-
+![CC-discordStatus](https://user-images.githubusercontent.com/36492979/210690582-f26a8490-b93c-475f-8550-3ec9831e9cc5.mp4)
 
 # CC-discordStatus 🤖
 
