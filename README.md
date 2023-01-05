@@ -1,5 +1,5 @@
 
-![Logo](https://conceptcollective.net/img/CCLong-light.png)
+![Logo](https://media.discordapp.net/attachments/1054586742042275960/1060378296686231614/Comp_2.gif)
 
 
 # CC-discordStatus 🤖
@@ -11,7 +11,6 @@ CC-discordStatus is a modern, open-source FiveM / RedM wrapper for interacting i
 <br>
   	<img src="https://i.gyazo.com/fbfd39cd3b310f795f88cc3df3e2ea38.gif">
    	<img src="https://i.gyazo.com/c7140f4085e7a90adcd5f7ba973ba4e9.gif">
-    <img src="https://cdn.discordapp.com/attachments/1054586742042275960/1060378181665824918/Comp_2.mp4">
 </br>
 </details>
 
