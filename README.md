@@ -4,7 +4,7 @@
 
 # CC-discordStatus 🤖
 
-CC-discordStatus is a modern open-source FiveM & RedM wrapper for interacting any event with Discord. 
+CC-discordStatus is a modern, open-source FiveM / RedM wrapper for interacting in-game events with Discord. 
 
 <details>
   <summary><strong>Screenshots</strong></summary>
@@ -18,8 +18,8 @@ CC-discordStatus is a modern open-source FiveM & RedM wrapper for interacting an
 ## Roadmap
 
 - FiveM Player Count -> Discord Channel Embed ✅
-- FiveM Player Count -> Discord Channel Name  ⏱️
-- Add more integrations
+- FiveM Player Count -> Discord Channel Name  ✅
+- more integrations to come soon!
 
 ## Support
 
