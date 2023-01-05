@@ -1,4 +1,4 @@
-https://user-images.githubusercontent.com/36492979/210690898-c459b155-1725-40c6-bd35-a8b918fd0814.mp4
+![CC-discordStatus](https://user-images.githubusercontent.com/36492979/210691299-b79cb8c2-c218-4e23-af58-ea935f23741a.gif)
 
 # CC-discordStatus 🤖
 
