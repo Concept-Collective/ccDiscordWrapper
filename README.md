@@ -1,4 +1,4 @@
-![CC-discordStatus](https://user-images.githubusercontent.com/36492979/210690582-f26a8490-b93c-475f-8550-3ec9831e9cc5.mp4)
+https://user-images.githubusercontent.com/36492979/210690898-c459b155-1725-40c6-bd35-a8b918fd0814.mp4
 
 # CC-discordStatus 🤖
 
