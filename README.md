@@ -1,8 +1,8 @@
 ![CC-discordStatus](https://user-images.githubusercontent.com/36492979/210691299-b79cb8c2-c218-4e23-af58-ea935f23741a.gif)
 
-# CC-discordStatus 🤖
+# ccDiscordWrapper 🤖
 
-CC-discordStatus is a modern, open-source FiveM / RedM wrapper for interacting in-game events with Discord. 
+ccDiscordWrapper is a modern, open-source wrapper for use in FiveM & RedM for interacting in-game events with Discord. 
 
 <details>
   <summary><strong>Screenshots</strong></summary>
@@ -13,7 +13,7 @@ CC-discordStatus is a modern, open-source FiveM / RedM wrapper for interacting i
 </details>
 
 
-## Roadmap
+## Roadmap (Builtin Examples)
 
 - FiveM Player Count -> Discord Channel Embed ✅
 - FiveM Player Count -> Discord Channel Name  ✅
