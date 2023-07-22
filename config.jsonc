@@ -1,0 +1,45 @@
+{
+    // Discord bot module configurations
+    "General": {
+        "IsServerUsingESX": false,
+        "IsServerUsingQBCore": false,
+        "appID": "1131898765368905768" // Discord Application ID (https://discord.com/developers/applications)
+    },
+    // Discord Bot required env.js file with sv_token.Discord_Token configured
+    "DiscordBot": {
+        "enabled": true, // Setting to false will disable the Discord Bot module
+        // player status message & channel configurations
+        "PlayerStatus": {
+            "enabled": true, // Setting to false will disable the player status message
+            "channelID": "1060555091838521445", // Channel ID to send player status messages to
+            "channelCountID": "1060555091838521445", // Channel ID to update name with current player count set to false to disable 
+            "listPlayers": true, // Setting to false will only show the total player count
+            "embedConfig": {
+                "title": "CC Server Status", // Title of the embed
+                "url": "https://conceptcollective.net", //  URL of the embed
+                "thumbnail": "https://cdn.discordapp.com/attachments/672308435534086149/1053879929848209418/idk.png" // Thumbnail of the embed
+            }
+        }
+    },
+    "DiscordRPC": {
+        "enabled": true, // Setting to false will disable the Discord Rich Presence module
+        "assetLarge": "cclogo", // Large asset name (https://discord.com/developers/applications)
+        "textLarge": "Large Text", // Large text, appears on Large Asset hover
+        "assetSmall": "cclogo", // Small asset name (https://discord.com/developers/applications)
+        "textSmall": "Small Text", // Small text, appears on Small Asset hover
+        "actions": {
+            "enabled": true, // Setting to false will disable the Discord Rich Presence actions
+            "action1": {
+                "name": "Website", // Name of the action
+                "url": "https://conceptcollective.net" // URL of the action
+            },
+            "action2": {
+                "name": "Join Now", // Name of the action
+                "url": "fivem://connect/cfx.re/join/8a3535" // URL of the action
+            }
+        }
+    },
+    "supportChecker": true,
+    "versionChecker": true
+    
+}

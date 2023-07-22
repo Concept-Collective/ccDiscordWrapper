@@ -1,14 +1,10 @@
-on('onClientResourceStart', () => {
-    if (GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCEnabled') === 'true'){
-        SetDiscordAppId(GetResourceMetadata(GetCurrentResourceName(), 'DiscordAppId'));
-        SetDiscordRichPresenceAction(0, GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCAction1Text'), GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCAction1URL'));
-        SetDiscordRichPresenceAction(1, GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCAction2Text'), GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCAction2URL'));
-        SetDiscordRichPresenceAsset(GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCAssetLarge'));
-        SetDiscordRichPresenceAssetText(GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCTextLarge'));
-        SetDiscordRichPresenceAssetSmall(GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCAssetSmall'));
-        SetDiscordRichPresenceAssetSmallText(GetResourceMetadata(GetCurrentResourceName(), 'DiscordRPCTextSmall'));
-        SetRichPresence(`${GetNumberOfPlayers()} player(s) connected`);
-    } else {
-        return;
-    }
+onNet('onServerConfigLoad', (config) => {
+    SetDiscordAppId(config.General.appID);
+    SetDiscordRichPresenceAction(0, config.DiscordRPC.actions.action1.name, config.DiscordRPC.actions.action1.url);
+    SetDiscordRichPresenceAction(1, config.DiscordRPC.actions.action2.name, config.DiscordRPC.actions.action2.url);
+    SetDiscordRichPresenceAsset(config.DiscordRPC.assetLarge);
+    SetDiscordRichPresenceAssetText(config.DiscordRPC.textLarge);
+    SetDiscordRichPresenceAssetSmall(config.DiscordRPC.assetSmall);
+    SetDiscordRichPresenceAssetSmallText(config.DiscordRPC.textSmall);
+    SetRichPresence(`${GetNumberOfPlayers()} player(s) connected`);
 });
