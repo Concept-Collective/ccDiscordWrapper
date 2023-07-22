@@ -20,5 +20,8 @@ files {
 }
 
 server_exports {
-    'sendNewMessage'
+    'sendNewMessage',
+    'webhookSendNewMessage',
+    'getPlayerDiscordAvatar',
+    'getPlayerDiscordHighestRole'
 }                                                                                          -- Automatic version checker to keep this script up-to-date

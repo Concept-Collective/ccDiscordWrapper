@@ -3,7 +3,8 @@
     "General": {
         "IsServerUsingESX": false,
         "IsServerUsingQBCore": false,
-        "appID": "1131898765368905768" // Discord Application ID (https://discord.com/developers/applications)
+        "appID": "1131898765368905768", // Discord Application ID (https://discord.com/developers/applications)
+        "serverID": "730086035643564183" // Discord Server ID (https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
     },
     // Discord Bot required env.js file with sv_token.Discord_Token configured
     "DiscordBot": {

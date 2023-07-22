@@ -29,6 +29,7 @@ function discordProcess() {
 	client.commands = new Collection();
 	client.discord = require('discord.js');
 	client.config = config;
+	client.players = {};
 	client.statusMessage = null;
 	
 	const commandsPath = path.join(root, 'server', 'commands');
@@ -84,8 +85,20 @@ function discordProcess() {
 
 		webhookClient.send({embeds: [embed]});
 	}
+
+	function getPlayerDiscordAvatar(source) {
+		let avatarURL = client.players[source].avatarURL
+		return avatarURL
+	}
+
+	function getPlayerDiscordHighestRole(source) {
+		let highestRole = client.players[source].roles[0]
+		return highestRole
+	}
 	
 
 	exports('botSendNewMessage', botSendNewMessage);
 	exports('webhookSendNewMessage', webhookSendNewMessage);
+	exports('getPlayerDiscordAvatar', getPlayerDiscordAvatar);
+	exports('getPlayerDiscordHighestRole', getPlayerDiscordHighestRole);
 }
