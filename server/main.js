@@ -1,5 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const fetch = require('node-fetch');
+
 
 // Serverside Configuration
 const root = GetResourcePath(GetCurrentResourceName());
@@ -14,9 +16,18 @@ const { Client, Collection, GatewayIntentBits, EmbedBuilder, WebhookClient } = r
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMembers] });
 
 // Support Checker - Checks if the resource is named correctly
-on("onResourceStart", (resourceName) => {
+on("onResourceStart", async (resourceName) => {
 	if (GetCurrentResourceName() !== "ccDiscordWrapper" && config.supportChecker === true) {
 		return console.warn(`^6[Warning]^0 For better support, it is recommended that "${GetCurrentResourceName()}" be renamed to "ccDiscordWrapper"^0`);
+	}
+	if (config.versionChecker !== false){
+		const response = await fetch('https://api.github.com/repos/Concept-Collective/ccDiscordWrapper/releases/latest')
+		const json = await response.json()
+		if (json.tag_name !== `v${GetResourceMetadata(GetCurrentResourceName(), 'version', 0)}`){
+			console.warn(`^3[WARNING]^0 ccDiscordWrapper is out of date! Please update to the latest version: ^2${json.tag_name}^0`)
+		} else {
+			console.log('^2[INFO]^0 ccDiscordWrapper is up to date!')
+		}
 	}
 });
 
