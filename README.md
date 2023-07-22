@@ -17,6 +17,7 @@ ccDiscordWrapper is a modern, open-source wrapper for use in FiveM & RedM for in
 
 - FiveM Player Count -> Discord Channel Embed ✅
 - FiveM Player Count -> Discord Channel Name  ✅
+- Discord GuildMember Information -> FiveM ⏳✅
 - more integrations to come soon!
 
 ## Support
