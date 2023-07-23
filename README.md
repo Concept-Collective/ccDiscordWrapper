@@ -14,8 +14,9 @@
 	    ccDiscordWrapper is a powerful resource that simplifies Discord integration for your FiveM server. It allows you to seamlessly connect your server to Discord, enabling exciting features for your community. 	    Whether you want to send messages, retrieve player Discord information, or sync roles, ccDiscordWrapper has got you covered!
 	    <br/>
   	</p>
-	[Documentation](https://docs.conceptcollective.net/docs/category/-cc-discord-wrapper) | [Report Bug](https://github.com/Concept-Collective/ccDiscordWrapper/issues) | [Download Now](https://github.com/Concept-Collective/ccDiscordWrapper/releases)
 	<a href="https://discord.gg/PSqXgg8v8M" title=""><img alt="Discord Invite" src="https://discordapp.com/api/guilds/807309391849062480/widget.png?style=banner2"></a>
+	[Documentation](https://docs.conceptcollective.net/docs/category/-cc-discord-wrapper) | [Report Bug](https://github.com/Concept-Collective/ccDiscordWrapper/issues) | [Download Now](https://github.com/Concept-Collective/ccDiscordWrapper/releases)
+	
 </div>
 
 ## 🎨 Showcase
