@@ -1,3 +1,11 @@
+<h4 align="center">
+	<img src="https://img.shields.io/github/release/Concept-Collective/ccDiscordWrapper.png">
+	<img src="https://img.shields.io/github/last-commit/Concept-Collective/ccDiscordWrapper">
+	<img src="https://img.shields.io/github/license/Concept-Collective/ccDiscordWrapper.png">
+	<img src="https://img.shields.io/github/issues/Concept-Collective/ccDiscordWrapper.png">
+	<img src="https://img.shields.io/github/contributors/Concept-Collective/ccDiscordWrapper.png">
+	<a href="https://discord.gg/PSqXgg8v8M" title=""><img alt="Discord Status" src="https://discordapp.com/api/guilds/807309391849062480/widget.png"></a>
+</h4>
 ![CC-discordStatus](https://user-images.githubusercontent.com/36492979/210691299-b79cb8c2-c218-4e23-af58-ea935f23741a.gif)
 
 # ccDiscordWrapper 🤖
