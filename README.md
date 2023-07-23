@@ -8,8 +8,15 @@
 </h4>
 
 <div align="center">
-![giphy_2|700x400](https://cdn.discordapp.com/attachments/672308435534086149/1132611001381044224/giphy_2.gif)
-
+	<img src="https://cdn.discordapp.com/attachments/672308435534086149/1132611001381044224/giphy_2.gif">
+	<h1 align="center">🎮 ccDiscordWrapper - Discord ➡️ FiveM</h1>
+	<p align="center">
+	    ccDiscordWrapper is a powerful resource that simplifies Discord integration for your FiveM server. It allows you to seamlessly connect your server to Discord, enabling exciting features for your community. 	    Whether you want to send messages, retrieve player Discord information, or sync roles, ccDiscordWrapper has got you covered!
+	    <br/>
+  	</p>
+	<a href="https://discord.gg/PSqXgg8v8M" title=""><img alt="Discord Invite" src="https://discordapp.com/api/guilds/807309391849062480/widget.png?style=banner2"></a>
+</div>
+	
 # 🎮 ccDiscordWrapper - Discord Integration for FiveM Servers
 
 ccDiscordWrapper is a powerful resource that simplifies Discord integration for your FiveM server. It allows you to seamlessly connect your server to Discord, enabling exciting features for your community. Whether you want to send messages, retrieve player Discord information, or sync roles, ccDiscordWrapper has got you covered!
