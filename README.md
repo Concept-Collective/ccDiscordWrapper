@@ -6,17 +6,8 @@
 	<img src="https://img.shields.io/github/contributors/Concept-Collective/ccDiscordWrapper.png">
 	<a href="https://discord.gg/PSqXgg8v8M" title=""><img alt="Discord Status" src="https://discordapp.com/api/guilds/807309391849062480/widget.png"></a>
 </h4>
-![CC-discordStatus](https://user-images.githubusercontent.com/36492979/210691299-b79cb8c2-c218-4e23-af58-ea935f23741a.gif)
 
-<h4 align="center">
-	<img src="https://img.shields.io/github/release/Concept-Collective/ccDiscordWrapper.png">
-	<img src="https://img.shields.io/github/last-commit/Concept-Collective/ccDiscordWrapper">
-	<img src="https://img.shields.io/github/license/Concept-Collective/ccDiscordWrapper.png">
-	<img src="https://img.shields.io/github/issues/Concept-Collective/ccDiscordWrapper.png">
-	<img src="https://img.shields.io/github/contributors/Concept-Collective/ccDiscordWrapper.png">
-</h4>
-
-![giphy_2|700x400](upload://bRFJXwITGvNLsR6kz0buyYbfSwB.gif)
+![giphy_2|700x400](https://cdn.discordapp.com/attachments/672308435534086149/1132611001381044224/giphy_2.gif)
 
 
 # 🎮 ccDiscordWrapper - Discord Integration for FiveM Servers
