@@ -4,7 +4,7 @@ games { 'rdr3', 'gta5' }
 
 author 'Concept Collective <contact@conceptcollective.net>'
 description 'ccDiscordWrapper - Discord Wrapper for FiveM'
-version '1.0.1'
+version '1.0.2'
 
 -- What to run
 client_scripts {
@@ -23,5 +23,7 @@ server_exports {
     'sendNewMessage',
     'webhookSendNewMessage',
     'getPlayerDiscordAvatar',
-    'getPlayerDiscordHighestRole'
+    'getPlayerDiscordHighestRole',
+    'isPlayerInDiscord',
+    'checkIfPlayerHasRole'
 }                                                                                          -- Automatic version checker to keep this script up-to-date

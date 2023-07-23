@@ -34,39 +34,68 @@ module.exports = {
 		});
 		on('playerJoining', async (source) => {
 			if (client.config.DiscordBot.enabled === true) {
-				let discordMember = await serverGuild.members.fetch(GetPlayerIdentifierByType(source, 'discord').substring(8))
-				client.players[GetPlayerGuid(source)] = {
-					id: discordMember.id,
-					avatarURL: discordMember.user.avatarURL(),
-					roles: discordMember.roles.cache.map(role => role.name),
-					joinedAt: discordMember.joinedTimestamp,
-					username: discordMember.user.username,
-					nickname: discordMember.nickname
+				let playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)
+				let playerName = GetPlayerName(source);
+				if (playerDiscordID) {
+					try {
+						let discordMember = await serverGuild.members.fetch(playerDiscordID)
+						client.players[playerName] = {
+							id: discordMember.id,
+							avatarURL: discordMember.user.avatarURL(),
+							roles: discordMember.roles.cache.map(role => role.name),
+							joinedAt: discordMember.joinedTimestamp,
+							username: discordMember.user.username,
+							nickname: discordMember.nickname,
+							inGuild: true,
+						}
+					} catch (e) {
+						client.players[playerName] = {
+							id: playerDiscordID,
+							avatarURL: null,
+							roles: [client.config.DiscordBot.PlayerRoles.notInDiscord],
+							joinedAt: null,
+							username: null,
+							nickname: null,
+							inGuild: false,
+						}
+						console.warn('Failed to fetch member from Discord API - is the player in your Discord server?')
+					}
+				} else {
+					console.warn('Unable to fetch players Discord ID from FiveM...')
+					client.players[playerName] = {
+						id: null,
+						avatarURL: null,
+						roles: [client.config.DiscordBot.PlayerRoles.DiscordnotFound],
+						joinedAt: null,
+						username: null,
+						nickname: null,
+						inGuild: null,
+					}
+				}
+				playerCountNum++;
+				let playerActualDiscord = client.players[playerName].id
+
+				if (client.config.DiscordBot.PlayerStatus.listPlayers === true){
+					nameString = `‣ ${playerName} - <@${playerActualDiscord}>`;
+					playerCount.push(nameString)
+					playerCount.forEach(player => {
+						players += `${player}\n`;
+					})
+					updatePlayerNames(players, statusEmbed)
+				} if (client.config.DiscordBot.PlayerStatus.channelCountID !== false){
+					updateChannelName(playerCountNum)
+				} else {
+					statusEmbed.setDescription(`There are currently ${playerCountNum} players connected to the server!`)
 				}
 			}
-			let playerName = GetPlayerName(source);
-			playerCountNum++;
-			let playerActualDiscord = client.players[GetPlayerGuid(source)].id
 			if (client.config.DiscordRPC.enabled === true) {
 				emitNet("onServerConfigLoad", source, client.config)
-			}
-			if (client.config.DiscordBot.PlayerStatus.listPlayers === true){
-				nameString = `‣ ${playerName} - <@${playerActualDiscord}>`;
-				playerCount.push(nameString)
-				playerCount.forEach(player => {
-					players += `${player}\n`;
-				})
-				updatePlayerNames(players, statusEmbed)
-			} if (client.config.DiscordBot.PlayerStatus.channelCountID !== false){
-				updateChannelName(playerCountNum)
-			} else {
-				statusEmbed.setDescription(`There are currently ${playerCountNum} players connected to the server!`)
 			}
 		})
 		on('playerDropped', (reason) => {
 			playerCountNum--;
-			delete client.players[GetPlayerGuid(source)];
-			let playerActualDiscord = GetPlayerIdentifierByType(source, 'discord').substring(8);
+			let playerActualDiscord = GetPlayerIdentifierByType(source, 'discord').substring(8)
+			delete client.players[playerActualDiscord];
 			if (client.config.DiscordBot.PlayerStatus.listPlayers === true){
 				nameString = `‣ ${GetPlayerName(source)} - <@${playerActualDiscord}>`;
 				playerCount = playerCount.filter( e => e !== nameString);

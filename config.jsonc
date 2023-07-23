@@ -1,14 +1,14 @@
 {
     // Discord bot module configurations
     "General": {
-        "IsServerUsingESX": false,
-        "IsServerUsingQBCore": false,
+        "IsServerUsingESX": false, // Set to true if using ESX
+        "IsServerUsingQBCore": false, // Set to true if using QBCore
         "appID": "1131898765368905768", // Discord Application ID (https://discord.com/developers/applications)
         "serverID": "730086035643564183" // Discord Server ID (https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
     },
     // Discord Bot required env.js file with sv_token.Discord_Token configured
     "DiscordBot": {
-        "enabled": true, // Setting to false will disable the Discord Bot module
+        "enabled": true, // Setting to false will disable the Discord Bot module **Must be enabled for PlayerStatus**
         // player status message & channel configurations
         "PlayerStatus": {
             "enabled": true, // Setting to false will disable the player status message
@@ -20,6 +20,10 @@
                 "url": "https://conceptcollective.net", //  URL of the embed
                 "thumbnail": "https://cdn.discordapp.com/attachments/672308435534086149/1053879929848209418/idk.png" // Thumbnail of the embed
             }
+        },
+        "PlayerRoles": {
+            "notInDiscord": "🏖️ Visitor", // Default role name to give players who are not in the Discord server.
+            "DiscordnotFound": "❌ Discord" // Default role name to give players that do not have Discord linked to their FiveM.
         }
     },
     "DiscordRPC": {
@@ -40,7 +44,7 @@
             }
         }
     },
-    "supportChecker": true,
-    "versionChecker": true
+    "supportChecker": true, // Setting to false will disable the support checker module **Only change if you are experienced**
+    "versionChecker": true  // Setting to false will disable the version checker module **Only change if you are experienced**
     
 }

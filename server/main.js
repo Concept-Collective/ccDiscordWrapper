@@ -20,7 +20,7 @@ on("onResourceStart", async (resourceName) => {
 	if (GetCurrentResourceName() !== "ccDiscordWrapper" && config.supportChecker === true) {
 		return console.warn(`^6[Warning]^0 For better support, it is recommended that "${GetCurrentResourceName()}" be renamed to "ccDiscordWrapper"^0`);
 	}
-	if (config.versionChecker !== false){
+	if (GetCurrentResourceName() !== "ccDiscordWrapper" && config.versionChecker !== false){
 		const response = await fetch('https://api.github.com/repos/Concept-Collective/ccDiscordWrapper/releases/latest')
 		const json = await response.json()
 		if (json.tag_name !== `v${GetResourceMetadata(GetCurrentResourceName(), 'version', 0)}`){
@@ -97,19 +97,34 @@ function discordProcess() {
 		webhookClient.send({embeds: [embed]});
 	}
 
+	function isPlayerInDiscord(source) {
+		let playerName = GetPlayerName(source);
+		let isPlayerInGuild = client.players[playerName].inGuild
+		return isPlayerInGuild
+	}
+
 	function getPlayerDiscordAvatar(source) {
-		let avatarURL = client.players[source].avatarURL
+		let playerName = GetPlayerName(source);
+		let avatarURL = client.players[playerName].avatarURL
 		return avatarURL
 	}
 
 	function getPlayerDiscordHighestRole(source) {
-		let highestRole = client.players[source].roles[0]
+		let playerName = GetPlayerName(source);
+		let highestRole = client.players[playerName].roles[0]
 		return highestRole
 	}
 	
+	function checkIfPlayerHasRole(source, roleName) {
+		let playerName = GetPlayerName(source);
+		let hasRole = client.players[playerName].roles.includes(roleName)
+		return hasRole
+	}
 
 	exports('botSendNewMessage', botSendNewMessage);
 	exports('webhookSendNewMessage', webhookSendNewMessage);
 	exports('getPlayerDiscordAvatar', getPlayerDiscordAvatar);
 	exports('getPlayerDiscordHighestRole', getPlayerDiscordHighestRole);
+	exports('isPlayerInDiscord', isPlayerInDiscord);
+	exports('checkIfPlayerHasRole', checkIfPlayerHasRole);
 }
