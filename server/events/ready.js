@@ -4,7 +4,7 @@ module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {
-		console.log(`^2Ready! ^1Logged in as: ${client.user.tag}`);
+		console.log(`^2Ready! ^1Logged in as: ^0${client.user.tag}`);
 
 		const serverGuild = await client.guilds.cache.get(client.config.General.serverID);
 		const guildChannel = await client.channels.cache.get(client.config.DiscordBot.PlayerStatus.channelID);
