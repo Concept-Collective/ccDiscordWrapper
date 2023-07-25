@@ -20,7 +20,7 @@ on("onResourceStart", async (resourceName) => {
 	if (GetCurrentResourceName() !== "ccDiscordWrapper" && config.supportChecker === true) {
 		return console.warn(`^6[Warning]^0 For better support, it is recommended that "${GetCurrentResourceName()}" be renamed to "ccDiscordWrapper"^0`);
 	}
-	if (GetCurrentResourceName() !== "ccDiscordWrapper" && config.versionChecker !== false){
+	if (GetCurrentResourceName() === resourceName && config.versionChecker === true){
 		const response = await fetch('https://api.github.com/repos/Concept-Collective/ccDiscordWrapper/releases/latest')
 		const json = await response.json()
 		if (json.tag_name !== `v${GetResourceMetadata(GetCurrentResourceName(), 'version', 0)}`){
@@ -109,16 +109,32 @@ function discordProcess() {
 		return avatarURL
 	}
 
-	function getPlayerDiscordHighestRole(source) {
+	function getPlayerDiscordRoles(source) {
 		let playerName = GetPlayerName(source);
-		let highestRole = client.players[playerName].roles[0]
-		return highestRole
+		let roles = client.players[playerName].roles
+		return roles
+	}
+
+	function getPlayerDiscordHighestRole(source, type) {
+		let playerName = GetPlayerName(source);
+		if (type === "name") {
+			let highestRole = client.players[playerName].roles[0].name
+			return highestRole
+		} else {
+			let highestRole = client.players[playerName].roles[0]
+			return highestRole
+		}
 	}
 	
-	function checkIfPlayerHasRole(source, roleName) {
+	function checkIfPlayerHasRole(source, role, type) {
 		let playerName = GetPlayerName(source);
-		let hasRole = client.players[playerName].roles.includes(roleName)
-		return hasRole
+		if (type === "name"){
+			let hasRole = client.players[playerName].roles.filter(rolef => rolef.name === role)
+			return hasRole
+		} else if (type === "id"){
+			let hasRole = client.players[playerName].roles.filter(rolef => rolef.id === role)
+			return hasRole
+		}
 	}
 
 	exports('botSendNewMessage', botSendNewMessage);
@@ -127,4 +143,5 @@ function discordProcess() {
 	exports('getPlayerDiscordHighestRole', getPlayerDiscordHighestRole);
 	exports('isPlayerInDiscord', isPlayerInDiscord);
 	exports('checkIfPlayerHasRole', checkIfPlayerHasRole);
+	exports('getPlayerDiscordRoles', getPlayerDiscordRoles);
 }

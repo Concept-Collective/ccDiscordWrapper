@@ -42,7 +42,7 @@ module.exports = {
 						client.players[playerName] = {
 							id: discordMember.id,
 							avatarURL: discordMember.user.avatarURL(),
-							roles: discordMember.roles.cache.map(role => role.name),
+							roles: discordMember.roles.cache.map(role => role),
 							joinedAt: discordMember.joinedTimestamp,
 							username: discordMember.user.username,
 							nickname: discordMember.nickname,
@@ -52,7 +52,7 @@ module.exports = {
 						client.players[playerName] = {
 							id: playerDiscordID,
 							avatarURL: null,
-							roles: [client.config.DiscordBot.PlayerRoles.notInDiscord],
+							roles: [{ "name": client.config.DiscordBot.PlayerRoles.notInDiscord }],
 							joinedAt: null,
 							username: null,
 							nickname: null,
@@ -62,10 +62,10 @@ module.exports = {
 					}
 				} else {
 					console.warn('Unable to fetch players Discord ID from FiveM...')
-					client.players[playerName] = {
+					return client.players[playerName] = {
 						id: null,
 						avatarURL: null,
-						roles: [client.config.DiscordBot.PlayerRoles.DiscordnotFound],
+						roles: [{ "name": client.config.DiscordBot.PlayerRoles.DiscordnotFound }],
 						joinedAt: null,
 						username: null,
 						nickname: null,
@@ -86,6 +86,17 @@ module.exports = {
 					updateChannelName(playerCountNum)
 				} else {
 					statusEmbed.setDescription(`There are currently ${playerCountNum} players connected to the server!`)
+				}
+
+				if (client.config.DiscordBot.PlayerAcePermissions.enabled === true) {
+					client.config.DiscordBot.PlayerAcePermissions.roleList.forEach(role => {
+						let playerCheck = doesPlayerHaveRole(role.roleID, source)
+						let playerRole = client.players[playerName].roles.filter(rolef => rolef.id === role.roleID)[0]
+						if (playerCheck === true) {
+							console.log(`^2${playerName} ^0has the role ^3${playerRole.name} ^0- ^8adding ACE permission ^1${role.aceGroup}^0!`)
+							ExecuteCommand(`add_principal identifier.discord:${playerDiscordID} ${role.aceGroup}`)
+						}
+					})
 				}
 			}
 			if (client.config.DiscordRPC.enabled === true) {
@@ -126,6 +137,18 @@ module.exports = {
 				statusEmbed.setDescription(players);
 			};
 			client.statusMessage.edit({embeds: [statusEmbed]});
+		}
+
+		function doesPlayerHaveRole(roleID, source){
+			let playerName = GetPlayerName(source);
+			let playerRoles = client.players[playerName].roles
+			let playerHasRole = false
+			playerRoles.forEach(role => {
+				if (role.id === roleID){
+					playerHasRole = true
+				}
+			})
+			return playerHasRole
 		}
 
 	},

@@ -24,6 +24,12 @@
         "PlayerRoles": {
             "notInDiscord": "🏖️ Visitor", // Default role name to give players who are not in the Discord server.
             "DiscordnotFound": "❌ Discord" // Default role name to give players that do not have Discord linked to their FiveM.
+        },
+        "PlayerAcePermissions": {
+            "enabled": true, // Setting to false will disable the player ace permissions module
+            "roleList": [
+                {"roleID": "736519152558276608", "aceGroup": "group.owner"}
+            ]
         }
     },
     "DiscordRPC": {
