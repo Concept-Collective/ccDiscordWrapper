@@ -145,3 +145,176 @@ function discordProcess() {
 	exports('checkIfPlayerHasRole', checkIfPlayerHasRole);
 	exports('getPlayerDiscordRoles', getPlayerDiscordRoles);
 }
+
+if (config.onJoinAdaptiveCard.enabled === true){
+
+	on('playerConnecting', async (playerName, setKickReason, deferrals) => {
+		let adaptiveCard = {
+			"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+			"type": "AdaptiveCard",
+			"version": "1.6",
+			"body": [
+				{
+					"type": "ColumnSet",
+					"columns": [
+						{
+							"type": "Column",
+							"width": "20px"
+						},
+						{
+							"type": "Column",
+							"width": "stretch",
+							"items": [
+								{
+									"type": "TextBlock",
+									"text": `${config.onJoinAdaptiveCard.mainTitle}`,
+									"wrap": true,
+									"style": "heading",
+									"horizontalAlignment": "Center",
+									"size": "ExtraLarge",
+									"maxLines": 1
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "Container",
+					"items": [
+						{
+							"type": "ColumnSet",
+							"columns": [
+								{
+									"type": "Column",
+									"width": "auto",
+									"items": [
+										{
+											"type": "Image",
+											"url": `${config.onJoinAdaptiveCard.logoURL}`,
+											"size": "Medium",
+											"altText": "Concept Collective Logo",
+											"spacing": "None",
+											"horizontalAlignment": "Center"
+										},
+										{
+											"type": "TextBlock",
+											"text": `${config.onJoinAdaptiveCard.logoText}`,
+											"horizontalAlignment": "Center",
+											"weight": "Bolder",
+											"wrap": true
+										}
+									]
+								},
+								{
+									"type": "Column",
+									"width": "stretch",
+									"separator": true,
+									"spacing": "Medium",
+									"items": [
+										{
+											"type": "TextBlock",
+											"text": `${new Date().toLocaleString(config.onJoinAdaptiveCard.timeLocale.timeFormat, { timeZone: config.onJoinAdaptiveCard.timeLocale.timeZone })}`,
+											"horizontalAlignment": "Center",
+											"wrap": true
+										},
+										{
+											"type": "TextBlock",
+											"text": `${config.onJoinAdaptiveCard.mainDescription}`,
+											"size": "Medium",
+											"horizontalAlignment": "Center",
+											"wrap": true
+										},
+										{
+											"type": "TextBlock",
+											"text": `${config.onJoinAdaptiveCard.otherDescription}`,
+											"size": "Large",
+											"horizontalAlignment": "Center",
+											"style": "heading",
+											"wrap": true
+										}
+									]
+								},
+								{
+									"type": "Column",
+									"width": "100px"
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "ColumnSet",
+					"columns": [
+						{
+							"type": "Column",
+							"width": "240px"
+						},
+						{
+							"type": "Column",
+							"width": "150px",
+							"items": [
+								{
+									"type": "ActionSet",
+									"actions": [
+										{
+											"type": "Action.OpenUrl",
+											"title": "Discord",
+											"url": "https://discord.conceptcollective.net",
+											"style": "positive"
+										}
+									],
+									"spacing": "None",
+									"horizontalAlignment": "Center"
+								}
+							]
+						},
+						{
+							"type": "Column",
+							"width": "135px",
+							"items": [
+								{
+									"type": "ActionSet",
+									"actions": [
+										{
+											"type": "Action.Submit",
+											"title": "Play Now!",
+											"style": "positive",
+											"id": "playSubmit"
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "Column",
+							"width": "150px",
+							"items": [
+								{
+									"type": "ActionSet",
+									"actions": [
+										{
+											"type": "Action.OpenUrl",
+											"title": "Website",
+											"style": "positive",
+											"url": "https://conceptcollective.net"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		deferrals.defer()
+		deferrals.update(`Hello ${playerName}. Your Discord ID is being checked...`)
+		setTimeout(() => {
+			deferrals.presentCard(adaptiveCard, function(data, error) {
+				if (data.submitId === 'playSubmit') {
+					deferrals.done()
+				}
+			})
+		}, 1000)
+	});
+
+}

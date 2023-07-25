@@ -32,6 +32,7 @@ module.exports = {
 		await guildChannel.send({embeds: [statusEmbed]}).then(async sentMessage => {
 			client.statusMessage = await sentMessage;
 		});
+		
 		on('playerJoining', async (source) => {
 			if (client.config.DiscordBot.enabled === true) {
 				let playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)

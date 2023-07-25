@@ -50,6 +50,19 @@
             }
         }
     },
+    "onJoinAdaptiveCard": {
+        "enabled": true, // Setting to false will disable the on join adaptive card module
+        "mainTitle": "Now Joining: Concept Collective Test Server", // Main title for the adaptive card
+        "mainDescription": "Welcome to the Concept Collective Test Server!", // Main description for the adaptive card
+        "otherDescription": "Please make sure to read the rules and have fun!", // Other description for the adaptive card
+        "logoURL": "https://conceptcollective.net/img/icon.png", // Logo URL for the adaptive card
+        "logoText": "ccDiscordWrapper", // Logo text for the adaptive card
+        "timeLocale": {
+            "timeZone": "Australia/Perth", // Time zone for the adaptive card
+            "timeFormat": "en-AU" // Time format for the adaptive card
+        } // Time locale for the adaptive card
+
+    },
     "supportChecker": true, // Setting to false will disable the support checker module **Only change if you are experienced**
     "versionChecker": true  // Setting to false will disable the version checker module **Only change if you are experienced**
     
