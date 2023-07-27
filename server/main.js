@@ -149,6 +149,14 @@ function discordProcess() {
 if (config.onJoinAdaptiveCard.enabled === true){
 
 	on('playerConnecting', async (playerName, setKickReason, deferrals) => {
+		if (config.General.IsDiscordRequired === true){
+			let playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)
+			if (!playerDiscordID) {
+				setKickReason(`You must have Discord open to join this server!`)
+				CancelEvent()
+				return
+			}
+		}
 		let adaptiveCard = {
 			"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
 			"type": "AdaptiveCard",
@@ -308,13 +316,23 @@ if (config.onJoinAdaptiveCard.enabled === true){
 		}
 		deferrals.defer()
 		deferrals.update(`Hello ${playerName}. Your Discord ID is being checked...`)
-		setTimeout(() => {
-			deferrals.presentCard(adaptiveCard, function(data, error) {
-				if (data.submitId === 'playSubmit') {
-					deferrals.done()
-				}
-			})
-		}, 1000)
+		try {
+			setTimeout(() => {
+				deferrals.presentCard(adaptiveCard, function(data, error) {
+					if (data.submitId === 'playSubmit') {
+						deferrals.done()
+					}
+				})
+			}, 1000)
+		}
+		catch (e) {
+			deferrals.update(`Something went wrong, please check the server console!`)
+			console.log(`[ERROR] ${e}`)
+			setTimeout(() => {
+				deferrals.done()
+			}, 1000)
+		}
+		
 	});
 
 }

@@ -4,7 +4,7 @@ games { 'rdr3', 'gta5' }
 
 author 'Concept Collective <contact@conceptcollective.net>'
 description 'ccDiscordWrapper - Discord Wrapper for FiveM'
-version '1.1.0'
+version '1.1.1'
 
 -- What to run
 client_scripts {
@@ -26,4 +26,8 @@ server_exports {
     'getPlayerDiscordHighestRole',
     'isPlayerInDiscord',
     'checkIfPlayerHasRole'
-}                                                                                          -- Automatic version checker to keep this script up-to-date
+}
+
+dependency {
+    'yarn'
+}
