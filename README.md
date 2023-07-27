@@ -38,6 +38,14 @@ Screenshots or videos of ccDiscordWrapper in action:
 </details>
 <br /><br />
 
+## Dependency Note: Yarn
+
+ccDiscordWrapper requires Yarn as a dependency for its proper functioning. However, there's no need to worry as Yarn is built into FiveM, and the server will automatically handle the installation.
+
+You don't have to install Yarn separately. When you add ccDiscordWrapper to your resources folder and start your FiveM server, the server will handle the dependency and ensure smooth operation.
+
+If you encounter any issues related to Yarn, please ensure you have the latest version of FiveM server artifacts installed and update your server accordingly.
+
 :warning: **Important Notice**
 
 If ccDiscordWrapper is a dependency for another resource, you can ignore this notice.
