@@ -4,7 +4,7 @@
         "IsServerUsingESX": false, // Set to true if using ESX
         "IsServerUsingQBCore": false, // Set to true if using QBCore
         "IsDiscordRequired": true, // Set to true if Discord is required to play on the server
-        "IsSteamRequired": true, // Set to true if Steam is required to play on the server
+        "IsSteamRequired": false, // Set to true if Steam is required to play on the server
         "appID": "1131898765368905768", // Discord Application ID (https://discord.com/developers/applications)
         "serverID": "730086035643564183", // Discord Server ID (https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
         "serverInviteURL": "https://discord.com/invite/xdV7w87Hk2", // Discord Server Invite URL (https://support.discord.com/hc/en-us/articles/208866998-Invites-101)      
@@ -16,7 +16,7 @@
         "enabled": true, // Setting to false will disable the Discord Bot module **Must be enabled for PlayerStatus**
         // player status message & channel configurations
         "PlayerStatus": {
-            "enabled": true, // Setting to false will disable the player status message
+            "enabled": false, // Setting to false will disable the player status message
             "channelID": "1060555091838521445", // Channel ID to send player status messages to
             "channelCountID": "1060555091838521445", // Channel ID to update name with current player count set to false to disable 
             "listPlayers": true, // Setting to false will only show the total player count
@@ -31,22 +31,22 @@
             "DiscordnotFound": "❌ Discord" // Default role name to give players that do not have Discord linked to their FiveM.
         },
         "PlayerAcePermissions": {
-            "enabled": true, // Setting to false will disable the player ace permissions module
+            "enabled": false, // Setting to false will disable the player ace permissions module
             "roleList": [
                 {"roleID": "736519152558276608", "aceGroup": "group.owner"}
             ]
         },
         "DiscordWhitelist": {
-            "enabled": true, // Setting to false will disable the Discord Whitelist module
+            "enabled": false, // Setting to false will disable the Discord Whitelist module
             "roleID": "736519152558276608" // Role ID to whitelist
         },
         "DiscordConnectQueue": {
-            "enabled": true, // Setting to false will disable the Discord Connect Queue module
+            "enabled": false, // Setting to false will disable the Discord Connect Queue module
             "rolePriority": ["736519152558276608", "736519208871133185", "736519424785514586", "736529899463901185"] // Role ID's in order of priority (First role in the array has the highest priority)
         }
     },
     "DiscordRPC": {
-        "enabled": true, // Setting to false will disable the Discord Rich Presence module
+        "enabled": false, // Setting to false will disable the Discord Rich Presence module
         "assetLarge": "cclogo", // Large asset name (https://discord.com/developers/applications)
         "textLarge": "Large Text", // Large text, appears on Large Asset hover
         "assetSmall": "cclogo", // Small asset name (https://discord.com/developers/applications)
