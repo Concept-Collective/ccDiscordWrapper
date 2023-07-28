@@ -15,16 +15,6 @@ const config = parser.parse(LoadResourceFile('ccDiscordWrapper', 'config.jsonc')
 const { Client, Collection, GatewayIntentBits, EmbedBuilder, WebhookClient } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMembers] });
 
-if (config.General.disableHardCap === true) {
-	StopResource("hardcap");
-}
-
-if (config.General.compatibilityMode === true) {
-	StopResource("connectqueue");
-	StopResource("zqueue");
-	StopResource("bad-discordqueue");
-}
-
 // Support Checker - Checks if the resource is named correctly
 on("onResourceStart", async (resourceName) => {
 	if (GetCurrentResourceName() !== "ccDiscordWrapper" && config.supportChecker === true) {
@@ -41,6 +31,16 @@ on("onResourceStart", async (resourceName) => {
 		} else {
 			console.log('^2[INFO]^0 ccDiscordWrapper is up to date!')
 		}
+	}
+
+	if (GetCurrentResourceName() === resourceName && config.General.disableHardCap === true) {
+		StopResource("hardcap");
+	}
+	
+	if (GetCurrentResourceName() === resourceName && config.General.compatibilityMode === true) {
+		StopResource("connectqueue");
+		StopResource("zqueue");
+		StopResource("bad-discordqueue");
 	}
 });
 
