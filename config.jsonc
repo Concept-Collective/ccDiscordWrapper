@@ -4,8 +4,12 @@
         "IsServerUsingESX": false, // Set to true if using ESX
         "IsServerUsingQBCore": false, // Set to true if using QBCore
         "IsDiscordRequired": true, // Set to true if Discord is required to play on the server
+        "IsSteamRequired": true, // Set to true if Steam is required to play on the server
         "appID": "1131898765368905768", // Discord Application ID (https://discord.com/developers/applications)
-        "serverID": "730086035643564183" // Discord Server ID (https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
+        "serverID": "730086035643564183", // Discord Server ID (https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
+        "serverInviteURL": "https://discord.com/invite/xdV7w87Hk2", // Discord Server Invite URL (https://support.discord.com/hc/en-us/articles/208866998-Invites-101)      
+        "disableHardCap": true, // Setting to false **Not Recommended* will disable the hardcap resource (Limits the number of players to the amount set by sv_maxclients in your server.cfg)
+        "compatibilityMode": true // Setting to false will disable the compatibility mode module (This module is used to stop known incompatible resources)
     },
     // Discord Bot required env.js file with sv_token.Discord_Token configured
     "DiscordBot": {
@@ -31,6 +35,14 @@
             "roleList": [
                 {"roleID": "736519152558276608", "aceGroup": "group.owner"}
             ]
+        },
+        "DiscordWhitelist": {
+            "enabled": true, // Setting to false will disable the Discord Whitelist module
+            "roleID": "736519152558276608" // Role ID to whitelist
+        },
+        "DiscordConnectQueue": {
+            "enabled": true, // Setting to false will disable the Discord Connect Queue module
+            "rolePriority": ["736519152558276608", "736519208871133185", "736519424785514586", "736529899463901185"] // Role ID's in order of priority (First role in the array has the highest priority)
         }
     },
     "DiscordRPC": {

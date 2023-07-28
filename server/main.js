@@ -15,6 +15,16 @@ const config = parser.parse(LoadResourceFile('ccDiscordWrapper', 'config.jsonc')
 const { Client, Collection, GatewayIntentBits, EmbedBuilder, WebhookClient } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildPresences, GatewayIntentBits.GuildMembers] });
 
+if (config.General.disableHardCap === true) {
+	StopResource("hardcap");
+}
+
+if (config.General.compatibilityMode === true) {
+	StopResource("connectqueue");
+	StopResource("zqueue");
+	StopResource("bad-discordqueue");
+}
+
 // Support Checker - Checks if the resource is named correctly
 on("onResourceStart", async (resourceName) => {
 	if (GetCurrentResourceName() !== "ccDiscordWrapper" && config.supportChecker === true) {
@@ -23,6 +33,9 @@ on("onResourceStart", async (resourceName) => {
 	if (GetCurrentResourceName() === resourceName && config.versionChecker === true){
 		const response = await fetch('https://api.github.com/repos/Concept-Collective/ccDiscordWrapper/releases/latest')
 		const json = await response.json()
+		if (json.message && json.message.includes('API rate limit exceeded')) {
+			return console.warn(`^6[Warning]^0 ccDiscordWrapper version checker is currently unavailable due to GitHub API rate limiting. Please try again later.^0`)
+		}
 		if (json.tag_name !== `v${GetResourceMetadata(GetCurrentResourceName(), 'version', 0)}`){
 			console.warn(`^3[WARNING]^0 ccDiscordWrapper is out of date! Please update to the latest version: ^2${json.tag_name}^0`)
 		} else {
@@ -137,6 +150,23 @@ function discordProcess() {
 		}
 	}
 
+	function checkIfPlayerIsWhitelisted(discordID, response) {
+		const serverGuild = client.guilds.cache.get(client.config.General.serverID);
+		const serverGuildMember = serverGuild.members.cache.get(discordID);
+		const doesPlayerHaveRole = serverGuildMember.roles.cache.get(client.config.DiscordBot.DiscordWhitelist.roleID)
+		if (response === 'roles'){
+			let memberRoles = serverGuildMember.roles.cache.map(role => role)
+			return JSON.stringify(memberRoles)
+		}
+		if (doesPlayerHaveRole !== undefined) {
+			if (doesPlayerHaveRole.id === client.config.DiscordBot.DiscordWhitelist.roleID) {
+				return true
+			}
+		} else {
+			return false
+		}
+	}
+
 	exports('botSendNewMessage', botSendNewMessage);
 	exports('webhookSendNewMessage', webhookSendNewMessage);
 	exports('getPlayerDiscordAvatar', getPlayerDiscordAvatar);
@@ -144,21 +174,45 @@ function discordProcess() {
 	exports('isPlayerInDiscord', isPlayerInDiscord);
 	exports('checkIfPlayerHasRole', checkIfPlayerHasRole);
 	exports('getPlayerDiscordRoles', getPlayerDiscordRoles);
+	exports('checkIfPlayerIsWhitelisted', checkIfPlayerIsWhitelisted)
 }
 
+let Queue = {}
+Queue.MaxPlayers = GetConvarInt("sv_maxclients", 48)
+Queue.Players = ['1', '2', '3', '4', '5', '6']
+
+Queue.QueuePriority = config.DiscordBot.DiscordConnectQueue.rolePriority.length
 if (config.onJoinAdaptiveCard.enabled === true){
 
 	on('playerConnecting', async (playerName, setKickReason, deferrals) => {
+		let playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)
 		if (config.General.IsDiscordRequired === true){
-			let playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)
 			if (!playerDiscordID) {
-				setKickReason(`You must have Discord open to join this server!`)
+				setKickReason(`\n\n🚧 Border Patrol\n\nDiscord was not found please relaunch FiveM with Discord running\n\nFor further support visit ${config.General.serverInviteURL}!`)
 				CancelEvent()
 				return
 			}
 		}
+		if (config.General.IsSteamRequired === true){
+			let playerSteamID = GetPlayerIdentifierByType(source, 'steam').substring(8)
+			if (!playerSteamID) {
+				setKickReason(`\n\n🚧 Border Patrol\n\nSteam was not found please relaunch FiveM with Steam running\n\nFor further support visit ${config.General.serverInviteURL}!`)
+				CancelEvent()
+				return
+			}
+		}
+		if (config.DiscordBot.DiscordWhitelist.enabled === true && config.DiscordBot.enabled === true){
+			let isPlayerWhitelisted = exports.ccDiscordWrapper.checkIfPlayerIsWhitelisted(playerDiscordID, 'boolean')
+			if (isPlayerWhitelisted === false){
+				console.warn(`^5Player ^3${playerName} ^5has attempted to join the server but ^8is not whitelisted and has been kicked^0!`)
+				setKickReason(`\n\n🚧 Border Patrol\n\nYou are not whitelisted therefore access to this server is prohibited\n\nFor further support visit ${config.General.serverInviteURL}!`)
+				CancelEvent()
+				return
+			}
+		} else if (config.DiscordBot.DiscordWhitelist.enabled === true && config.DiscordBot.enabled !== true) {
+			return console.warn('Discord Whitelist is enabled but Discord Bot module is not enabled therefor it will not work!')
+		}
 		let adaptiveCard = {
-			"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
 			"type": "AdaptiveCard",
 			"version": "1.6",
 			"body": [
@@ -316,22 +370,42 @@ if (config.onJoinAdaptiveCard.enabled === true){
 		}
 		deferrals.defer()
 		deferrals.update(`Hello ${playerName}. Your Discord ID is being checked...`)
-		try {
 			setTimeout(() => {
 				deferrals.presentCard(adaptiveCard, function(data, error) {
 					if (data.submitId === 'playSubmit') {
-						deferrals.done()
+						if (config.DiscordBot.DiscordConnectQueue.enabled === true) {
+							deferrals.update(`You have been added to the queue - Please wait...`)
+							let playerDiscordRoles = JSON.parse(exports.ccDiscordWrapper.checkIfPlayerIsWhitelisted(playerDiscordID, 'roles'))
+							let queuePriority = config.DiscordBot.DiscordConnectQueue.rolePriority.length + 1
+							config.DiscordBot.DiscordConnectQueue.rolePriority.forEach((role, index) => {
+								let doesPlayerHavePriorityRole = playerDiscordRoles.filter(rolef => rolef.id === role)
+								if (doesPlayerHavePriorityRole.length > 0) {
+									if (index < queuePriority) {
+										queuePriority = index
+										queueMath = Math.round((queuePriority / Queue.Players.length) * Queue.Players.length)
+										let newArray = [...Queue.Players.slice(0, queueMath), playerName, ...Queue.Players.slice(queueMath)]
+										Queue.Players = newArray
+									}
+								}
+							})
+							if (Queue.Players.filter(player => player === playerName).length === 0) {
+								Queue.Players.push(playerName)
+							}
+							const queueCheck = setInterval(function() {
+								if (Queue.Players[0] === playerName) {
+									deferrals.done()
+									Queue.Players.shift()
+									clearInterval(queueCheck)
+								} else {
+									deferrals.update(`You are currently ${Queue.Players.indexOf(playerName) + 1} out of ${Queue.Players.length} in the queue - Please wait...`)
+								}
+							}, 1000)
+						} else {
+							deferrals.done()
+						}
 					}
 				})
 			}, 1000)
-		}
-		catch (e) {
-			deferrals.update(`Something went wrong, please check the server console!`)
-			console.log(`[ERROR] ${e}`)
-			setTimeout(() => {
-				deferrals.done()
-			}, 1000)
-		}
 		
 	});
 
