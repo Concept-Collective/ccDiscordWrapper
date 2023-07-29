@@ -179,7 +179,7 @@ function discordProcess() {
 
 let Queue = {}
 Queue.MaxPlayers = GetConvarInt("sv_maxclients", 48)
-Queue.Players = ['1', '2', '3', '4', '5', '6']
+Queue.Players = []
 
 Queue.QueuePriority = config.DiscordBot.DiscordConnectQueue.rolePriority.length
 if (config.onJoinAdaptiveCard.enabled === true){
@@ -371,7 +371,11 @@ if (config.onJoinAdaptiveCard.enabled === true){
 		deferrals.defer()
 		deferrals.update(`Hello ${playerName}. Your Discord ID is being checked...`)
 			setTimeout(() => {
-				deferrals.presentCard(adaptiveCard, function(data, error) {
+				deferrals.presentCard(adaptiveCard, function(data, RawData) {
+					if (config.Debug === true) {
+						console.log(`[DEBUG] Adaptive Card Data: ${JSON.stringify(data)}`)
+						console.log(`[DEBUG] Adaptive Card RawData: ${JSON.stringify(RawData)}`)
+					}
 					if (data.submitId === 'playSubmit') {
 						if (config.DiscordBot.DiscordConnectQueue.enabled === true) {
 							deferrals.update(`You have been added to the queue - Please wait...`)
@@ -381,8 +385,8 @@ if (config.onJoinAdaptiveCard.enabled === true){
 								let doesPlayerHavePriorityRole = playerDiscordRoles.filter(rolef => rolef.id === role)
 								if (doesPlayerHavePriorityRole.length > 0) {
 									if (index < queuePriority) {
-										queuePriority = index
-										queueMath = Math.round((queuePriority / Queue.Players.length) * Queue.Players.length)
+										queuePriority = index / Queue.QueuePriority.length
+										queueMath = Math.round(queuePriority * Queue.Players.length)
 										let newArray = [...Queue.Players.slice(0, queueMath), playerName, ...Queue.Players.slice(queueMath)]
 										Queue.Players = newArray
 									}
@@ -393,6 +397,9 @@ if (config.onJoinAdaptiveCard.enabled === true){
 							}
 							const queueCheck = setInterval(function() {
 								if (Queue.Players[0] === playerName) {
+									if (config.Debug === true) {
+										console.log(`[DEBUG] Player ${playerName} has just finished in the queue.`)
+									}
 									deferrals.done()
 									Queue.Players.shift()
 									clearInterval(queueCheck)

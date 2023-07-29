@@ -10,7 +10,7 @@ module.exports = {
 		const guildChannel = await client.channels.cache.get(client.config.DiscordBot.PlayerStatus.channelID);
 		const guildStatusChannel = await client.channels.cache.get(client.config.DiscordBot.PlayerStatus.channelCountID);
 
-		await guildChannel.bulkDelete(1).catch(e => console.warn('Failed to delete previous message - probably becuase there isn\'t one!'));
+		await guildChannel.bulkDelete(1)
 		let statusEmbed = new client.discord.EmbedBuilder()
 			.setColor(0x0099FF)
 			.setTitle(`${client.config.DiscordBot.PlayerStatus.embedConfig.title}`)
@@ -73,6 +73,11 @@ module.exports = {
 						inGuild: null,
 					}
 				}
+
+				if (client.config.Debug === true) {
+					console.log(`Player data: ${JSON.stringify(client.players)}`)
+				}
+
 				playerCountNum++;
 				let playerActualDiscord = client.players[playerName].id
 
@@ -108,6 +113,9 @@ module.exports = {
 			playerCountNum--;
 			let playerActualDiscord = GetPlayerIdentifierByType(source, 'discord').substring(8)
 			delete client.players[playerActualDiscord];
+			if (client.config.Debug === true) {
+				console.log(`Player data: ${JSON.stringify(client.players)}`)
+			}
 			if (client.config.DiscordBot.PlayerStatus.listPlayers === true){
 				nameString = `‣ ${GetPlayerName(source)} - <@${playerActualDiscord}>`;
 				playerCount = playerCount.filter( e => e !== nameString);

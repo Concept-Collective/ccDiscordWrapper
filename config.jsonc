@@ -1,10 +1,11 @@
 {
+    "Debug": false,
     // Discord bot module configurations
     "General": {
         "IsServerUsingESX": false, // Set to true if using ESX
         "IsServerUsingQBCore": false, // Set to true if using QBCore
         "IsDiscordRequired": true, // Set to true if Discord is required to play on the server
-        "IsSteamRequired": false, // Set to true if Steam is required to play on the server
+        "IsSteamRequired": true, // Set to true if Steam is required to play on the server
         "appID": "1131898765368905768", // Discord Application ID (https://discord.com/developers/applications)
         "serverID": "730086035643564183", // Discord Server ID (https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
         "serverInviteURL": "https://discord.com/invite/xdV7w87Hk2", // Discord Server Invite URL (https://support.discord.com/hc/en-us/articles/208866998-Invites-101)      
@@ -16,7 +17,7 @@
         "enabled": true, // Setting to false will disable the Discord Bot module **Must be enabled for PlayerStatus**
         // player status message & channel configurations
         "PlayerStatus": {
-            "enabled": false, // Setting to false will disable the player status message
+            "enabled": true, // Setting to false will disable the player status message
             "channelID": "1060555091838521445", // Channel ID to send player status messages to
             "channelCountID": "1060555091838521445", // Channel ID to update name with current player count set to false to disable 
             "listPlayers": true, // Setting to false will only show the total player count
@@ -46,7 +47,7 @@
         }
     },
     "DiscordRPC": {
-        "enabled": false, // Setting to false will disable the Discord Rich Presence module
+        "enabled": true, // Setting to false will disable the Discord Rich Presence module
         "assetLarge": "cclogo", // Large asset name (https://discord.com/developers/applications)
         "textLarge": "Large Text", // Large text, appears on Large Asset hover
         "assetSmall": "cclogo", // Small asset name (https://discord.com/developers/applications)
