@@ -1,14 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const fetch = require('node-fetch');
-let ESX = undefined
-let QBCore = undefined
-
-if (config.General.IsServerUsingQBCore === true) {
-	QBCore = exports.qb-core.GetCoreObject()
-} if (config.General.IsServerUsingESX === true) {
-	ESX = exports.es_extended.getSharedObject()
-}
 
 // Serverside Configuration
 const root = GetResourcePath(GetCurrentResourceName());
@@ -17,6 +9,16 @@ let env_config = require(path.join(root, 'env.js'));
 // Requires external module due to JSONC not being a standard JSON format
 const parser = require('jsonc-parser');
 const config = parser.parse(LoadResourceFile('ccDiscordWrapper', 'config.jsonc'))
+
+// Framework stuff
+let ESX = undefined
+let QBCore = undefined
+
+if (config.General.IsServerUsingQBCore === true) {
+	QBCore = exports.qb-core.GetCoreObject()
+} if (config.General.IsServerUsingESX === true) {
+	ESX = exports.es_extended.getSharedObject()
+}
 
 // Discord.js initialisation for Discord Bot Module
 const { Client, Collection, GatewayIntentBits, EmbedBuilder, WebhookClient } = require('discord.js');
