@@ -35,7 +35,12 @@ module.exports = {
 		
 		on('playerJoining', async (source) => {
 			if (client.config.DiscordBot.enabled === true) {
-				let playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)
+				let playerDiscordID = '';
+				if (client.config.General.IsServerUsingQBCore === true) {
+					playerDiscordID = client.QBCore.Functions.GetIdentifier(source, 'discord').substring(8)
+				} else {
+					playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)
+				}
 				let playerName = GetPlayerName(source);
 				if (playerDiscordID) {
 					try {

@@ -1,7 +1,14 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const fetch = require('node-fetch');
+let ESX = undefined
+let QBCore = undefined
 
+if (config.General.IsServerUsingQBCore === true) {
+	QBCore = exports.qb-core.GetCoreObject()
+} if (config.General.IsServerUsingESX === true) {
+	ESX = exports.es_extended.getSharedObject()
+}
 
 // Serverside Configuration
 const root = GetResourcePath(GetCurrentResourceName());
@@ -51,6 +58,8 @@ if (config.DiscordBot.enabled === true){
 
 function discordProcess() {
 	client.commands = new Collection();
+	client.QBCore = QBCore;
+	client.ESX = ESX;
 	client.discord = require('discord.js');
 	client.config = config;
 	client.players = {};
@@ -187,7 +196,7 @@ if (config.onJoinAdaptiveCard.enabled === true){
 	on('playerConnecting', async (playerName, setKickReason, deferrals) => {
 		let playerDiscordID = '';
 		let playerSteamID = '';
-		if (config.General.IsServerUsingQBCore) {
+		if (config.General.IsServerUsingQBCore === true) {
 			playerDiscordID = QBCore.Functions.GetIdentifier(source, 'discord')
 		} else {
 			playerDiscordID = GetPlayerIdentifierByType(source, 'discord')
