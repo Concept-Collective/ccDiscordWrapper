@@ -185,7 +185,13 @@ Queue.QueuePriority = config.DiscordBot.DiscordConnectQueue.rolePriority.length
 if (config.onJoinAdaptiveCard.enabled === true){
 
 	on('playerConnecting', async (playerName, setKickReason, deferrals) => {
-		let playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)
+		let playerDiscordID = '';
+		let playerSteamID = '';
+		if (config.General.IsServerUsingQBCore) {
+			playerDiscordID = QBCore.Functions.GetIdentifier(source, 'discord')
+		} else {
+			playerDiscordID = GetPlayerIdentifierByType(source, 'discord')
+		}
 		if (config.General.IsDiscordRequired === true){
 			if (!playerDiscordID) {
 				setKickReason(`\n\n🚧 Border Patrol\n\nDiscord was not found please relaunch FiveM with Discord running\n\nFor further support visit ${config.General.serverInviteURL}!`)
@@ -194,7 +200,11 @@ if (config.onJoinAdaptiveCard.enabled === true){
 			}
 		}
 		if (config.General.IsSteamRequired === true){
-			let playerSteamID = GetPlayerIdentifierByType(source, 'steam').substring(8)
+			if (config.General.IsServerUsingQBCore) {
+				playerSteamID = QBCore.Functions.GetIdentifier(source, 'steam')
+			} else { 
+				playerSteamID = GetPlayerIdentifierByType(source, 'steam')
+			}
 			if (!playerSteamID) {
 				setKickReason(`\n\n🚧 Border Patrol\n\nSteam was not found please relaunch FiveM with Steam running\n\nFor further support visit ${config.General.serverInviteURL}!`)
 				CancelEvent()

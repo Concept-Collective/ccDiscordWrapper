@@ -75,7 +75,7 @@ module.exports = {
 				}
 
 				if (client.config.Debug === true) {
-					console.log(`Player data: ${JSON.stringify(client.players)}`)
+					console.log(`[DEBUG] Player data: ${JSON.stringify(client.players)}`)
 				}
 
 				playerCountNum++;
