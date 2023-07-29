@@ -15,9 +15,9 @@ let ESX = undefined
 let QBCore = undefined
 
 if (config.General.IsServerUsingQBCore === true) {
-	QBCore = exports.qb-core.GetCoreObject()
+	QBCore = exports['qb-core'].GetCoreObject()
 } if (config.General.IsServerUsingESX === true) {
-	ESX = exports.es_extended.getSharedObject()
+	ESX = exports['es_extended'].getSharedObject()
 }
 
 // Discord.js initialisation for Discord Bot Module
