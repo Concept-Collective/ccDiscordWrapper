@@ -4,7 +4,7 @@ games { 'rdr3', 'gta5' }
 
 author 'Concept Collective <contact@conceptcollective.net>'
 description 'ccDiscordWrapper - Discord Wrapper for FiveM'
-version '1.2.1'
+version '1.2.2'
 
 -- What to run
 client_scripts {

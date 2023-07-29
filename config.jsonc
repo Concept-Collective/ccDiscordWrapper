@@ -17,7 +17,7 @@
         "enabled": true, // Setting to false will disable the Discord Bot module **Must be enabled for PlayerStatus**
         // player status message & channel configurations
         "PlayerStatus": {
-            "enabled": true, // Setting to false will disable the player status message
+            "enabled": false, // Setting to false will disable the player status message
             "channelID": "1060555091838521445", // Channel ID to send player status messages to
             "channelCountID": "1060555091838521445", // Channel ID to update name with current player count set to false to disable 
             "listPlayers": true, // Setting to false will only show the total player count

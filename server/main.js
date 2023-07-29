@@ -407,7 +407,6 @@ if (config.onJoinAdaptiveCard.enabled === true){
 				if (config.DiscordBot.DiscordConnectQueue.enabled === true) {
 					deferrals.update(`You have been added to the queue - Please wait...`)
 					let playerDiscordRoles = JSON.parse(exports.ccDiscordWrapper.checkIfPlayerIsWhitelisted(playerDiscordID, 'roles'))
-					console.log(playerDiscordRoles)
 					let queuePriority = config.DiscordBot.DiscordConnectQueue.rolePriority.length + 1
 					config.DiscordBot.DiscordConnectQueue.rolePriority.forEach((role, index) => {
 						let doesPlayerHavePriorityRole = playerDiscordRoles.filter(rolef => rolef.id === role)

@@ -119,7 +119,7 @@ module.exports = {
 			let playerActualDiscord = GetPlayerIdentifierByType(source, 'discord').substring(8)
 			delete client.players[playerActualDiscord];
 			if (client.config.Debug === true) {
-				console.log(`Player data: ${JSON.stringify(client.players)}`)
+				console.log(`[DEBUG] Player data: ${JSON.stringify(client.players)}`)
 			}
 			if (client.config.DiscordBot.PlayerStatus.listPlayers === true){
 				nameString = `‣ ${GetPlayerName(source)} - <@${playerActualDiscord}>`;
