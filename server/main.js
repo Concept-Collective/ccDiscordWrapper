@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const fetch = require('node-fetch');
+const sleep = m => new Promise(r => setTimeout(r, m))
 
 // Serverside Configuration
 const root = GetResourcePath(GetCurrentResourceName());
@@ -211,17 +212,23 @@ if (config.onJoinAdaptiveCard.enabled === true){
 			}
 		}
 		if (config.General.IsSteamRequired === true){
-			if (config.General.IsServerUsingQBCore) {
+			if (config.General.IsServerUsingQBCore === true) {
 				playerSteamID = QBCore.Functions.GetIdentifier(source, 'steam')
 			} else { 
 				playerSteamID = GetPlayerIdentifierByType(source, 'steam')
 			}
 			if (!playerSteamID) {
-				setKickReason(`\n\n🚧 Border Patrol\n\nSteam was not found please relaunch FiveM with Steam running\n\nFor further support visit ${config.General.serverInviteURL}!`)
-				CancelEvent()
-				return
+				if (config.General.IsServerUsingQBCore === true) {
+					console.warn('[WARN] QBCore has removed the ability to get steam identifiers, please use a different framework or disable the steam requirement in config.jsonc!')
+				} else {
+					setKickReason(`\n\n🚧 Border Patrol\n\nSteam was not found please relaunch FiveM with Steam running\n\nFor further support visit ${config.General.serverInviteURL}!`)
+					CancelEvent()
+					return
+				}
 			}
 		}
+		playerDiscordID = playerDiscordID.substring(8)
+		playerSteamID = playerSteamID.substring(7)
 		if (config.DiscordBot.DiscordWhitelist.enabled === true && config.DiscordBot.enabled === true){
 			let isPlayerWhitelisted = exports.ccDiscordWrapper.checkIfPlayerIsWhitelisted(playerDiscordID, 'boolean')
 			if (isPlayerWhitelisted === false){
@@ -391,50 +398,48 @@ if (config.onJoinAdaptiveCard.enabled === true){
 		}
 		deferrals.defer()
 		deferrals.update(`Hello ${playerName}. Your Discord ID is being checked...`)
-			setTimeout(() => {
-				deferrals.presentCard(adaptiveCard, function(data, RawData) {
-					if (config.Debug === true) {
-						console.log(`[DEBUG] Adaptive Card Data: ${JSON.stringify(data)}`)
-						console.log(`[DEBUG] Adaptive Card RawData: ${JSON.stringify(RawData)}`)
-					}
-					if (data.submitId === 'playSubmit') {
-						if (config.DiscordBot.DiscordConnectQueue.enabled === true) {
-							deferrals.update(`You have been added to the queue - Please wait...`)
-							let playerDiscordRoles = JSON.parse(exports.ccDiscordWrapper.checkIfPlayerIsWhitelisted(playerDiscordID, 'roles'))
-							let queuePriority = config.DiscordBot.DiscordConnectQueue.rolePriority.length + 1
-							config.DiscordBot.DiscordConnectQueue.rolePriority.forEach((role, index) => {
-								let doesPlayerHavePriorityRole = playerDiscordRoles.filter(rolef => rolef.id === role)
-								if (doesPlayerHavePriorityRole.length > 0) {
-									if (index < queuePriority) {
-										queuePriority = index / Queue.QueuePriority.length
-										queueMath = Math.round(queuePriority * Queue.Players.length)
-										let newArray = [...Queue.Players.slice(0, queueMath), playerName, ...Queue.Players.slice(queueMath)]
-										Queue.Players = newArray
-									}
-								}
-							})
-							if (Queue.Players.filter(player => player === playerName).length === 0) {
-								Queue.Players.push(playerName)
+		await sleep(1000);
+		deferrals.presentCard(adaptiveCard, function(data, rawData) {
+			if (config.Debug === true) {
+				console.log(`[DEBUG] Adaptive Card Data: ${JSON.stringify(data)}`)
+			}
+			if (data.submitId === 'playSubmit') {
+				if (config.DiscordBot.DiscordConnectQueue.enabled === true) {
+					deferrals.update(`You have been added to the queue - Please wait...`)
+					let playerDiscordRoles = JSON.parse(exports.ccDiscordWrapper.checkIfPlayerIsWhitelisted(playerDiscordID, 'roles'))
+					console.log(playerDiscordRoles)
+					let queuePriority = config.DiscordBot.DiscordConnectQueue.rolePriority.length + 1
+					config.DiscordBot.DiscordConnectQueue.rolePriority.forEach((role, index) => {
+						let doesPlayerHavePriorityRole = playerDiscordRoles.filter(rolef => rolef.id === role)
+						if (doesPlayerHavePriorityRole.length > 0) {
+							if (index < queuePriority) {
+								queuePriority = index / Queue.QueuePriority.length
+								queueMath = Math.round(queuePriority * Queue.Players.length)
+								let newArray = [...Queue.Players.slice(0, queueMath), playerName, ...Queue.Players.slice(queueMath)]
+								Queue.Players = newArray
 							}
-							const queueCheck = setInterval(function() {
-								if (Queue.Players[0] === playerName) {
-									if (config.Debug === true) {
-										console.log(`[DEBUG] Player ${playerName} has just finished in the queue.`)
-									}
-									deferrals.done()
-									Queue.Players.shift()
-									clearInterval(queueCheck)
-								} else {
-									deferrals.update(`You are currently ${Queue.Players.indexOf(playerName) + 1} out of ${Queue.Players.length} in the queue - Please wait...`)
-								}
-							}, 1000)
-						} else {
-							deferrals.done()
 						}
+					})
+					if (Queue.Players.filter(player => player === playerName).length === 0) {
+						Queue.Players.push(playerName)
 					}
-				})
-			}, 1000)
-		
+					const queueCheck = setInterval(function() {
+						if (Queue.Players[0] === playerName) {
+							if (config.Debug === true) {
+								console.log(`[DEBUG] Player ${playerName} has just finished in the queue.`)
+							}
+							deferrals.done()
+							Queue.Players.shift()
+							clearInterval(queueCheck)
+						} else {
+							deferrals.update(`You are currently ${Queue.Players.indexOf(playerName) + 1} out of ${Queue.Players.length} in the queue - Please wait...`)
+						}
+					}, 1000)
+				} else {
+					deferrals.done()
+				}
+			}
+		})
 	});
 
 }

@@ -5,7 +5,7 @@
         "IsServerUsingESX": false, // Set to true if using ESX
         "IsServerUsingQBCore": false, // Set to true if using QBCore
         "IsDiscordRequired": true, // Set to true if Discord is required to play on the server
-        "IsSteamRequired": true, // Set to true if Steam is required to play on the server
+        "IsSteamRequired": false, // Set to true if Steam is required to play on the server
         "appID": "1131898765368905768", // Discord Application ID (https://discord.com/developers/applications)
         "serverID": "730086035643564183", // Discord Server ID (https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
         "serverInviteURL": "https://discord.com/invite/xdV7w87Hk2", // Discord Server Invite URL (https://support.discord.com/hc/en-us/articles/208866998-Invites-101)      
