@@ -166,6 +166,10 @@ function discordProcess() {
 		const serverGuild = client.guilds.cache.get(client.config.General.serverID);
 		const serverGuildMember = serverGuild.members.cache.get(discordID);
 		const doesPlayerHaveRole = serverGuildMember.roles.cache.get(client.config.DiscordBot.DiscordWhitelist.roleID)
+		if (client.config.Debug === true) {
+			console.log(`[DEBUG] Guild Data: ${serverGuild}`);
+			console.log(`[DEBUG] Guild Member Data: ${serverGuildMember}`)
+		}
 		if (response === 'roles'){
 			let memberRoles = serverGuildMember.roles.cache.map(role => role)
 			return JSON.stringify(memberRoles)
