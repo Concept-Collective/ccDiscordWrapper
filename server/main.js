@@ -39,7 +39,7 @@ on("onResourceStart", async (resourceName) => {
 		if (json.tag_name !== `v${GetResourceMetadata(GetCurrentResourceName(), 'version', 0)}`){
 			console.warn(`^3[WARNING]^0 ccDiscordWrapper is out of date! Please update to the latest version: ^2${json.tag_name}^0`)
 		} else {
-			console.log('^2[INFO]^0 ccDiscordWrapper is up to date!')
+			console.log(`^2[INFO]^0 ccDiscordWrapper is up to date [^2v${GetResourceMetadata(GetCurrentResourceName(), 'version', 0)}^0]!`)
 		}
 	}
 
@@ -67,6 +67,10 @@ function discordProcess() {
 	client.config = config;
 	client.players = {};
 	client.statusMessage = null;
+
+	process.on('unhandledRejection', error => {
+		console.error('Unhandled promise rejection:', error);
+	});
 	
 	const commandsPath = path.join(root, 'server', 'commands');
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -167,8 +171,8 @@ function discordProcess() {
 		const serverGuildMember = serverGuild.members.cache.get(discordID);
 		const doesPlayerHaveRole = serverGuildMember.roles.cache.get(client.config.DiscordBot.DiscordWhitelist.roleID)
 		if (client.config.Debug === true) {
-			console.log(`[DEBUG] Guild Data: ${serverGuild}`);
-			console.log(`[DEBUG] Guild Member Data: ${serverGuildMember}`)
+			console.log(`[DEBUG] Guild Data: ${serverGuild.toJSON()}`);
+			console.log(`[DEBUG] Guild Member Data: ${serverGuildMember.toJSON()}`)
 		}
 		if (response === 'roles'){
 			let memberRoles = serverGuildMember.roles.cache.map(role => role)
