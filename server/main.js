@@ -67,10 +67,6 @@ function discordProcess() {
 	client.config = config;
 	client.players = {};
 	client.statusMessage = null;
-
-	process.on('unhandledRejection', error => {
-		console.error('Unhandled promise rejection:', error);
-	});
 	
 	const commandsPath = path.join(root, 'server', 'commands');
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -170,9 +166,10 @@ function discordProcess() {
 		const serverGuild = client.guilds.cache.get(client.config.General.serverID);
 		const serverGuildMember = serverGuild.members.cache.get(discordID);
 		const doesPlayerHaveRole = serverGuildMember.roles.cache.get(client.config.DiscordBot.DiscordWhitelist.roleID)
-		if (client.config.Debug === true) {
-			console.log(`[DEBUG] Guild Data: ${serverGuild.toJSON()}`);
-			console.log(`[DEBUG] Guild Member Data: ${serverGuildMember.toJSON()}`)
+
+		if (config.Debug === true) {
+			console.log(`[DEBUG] Guild Data: ${JSON.stringify(serverGuild.toJSON())}`);
+			console.log(`[DEBUG] Guild Member Data: ${JSON.stringify(serverGuildMember.toJSON())}`)
 		}
 		if (response === 'roles'){
 			let memberRoles = serverGuildMember.roles.cache.map(role => role)

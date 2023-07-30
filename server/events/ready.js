@@ -10,6 +10,16 @@ module.exports = {
 		const guildChannel = await client.channels.cache.get(client.config.DiscordBot.PlayerStatus.channelID);
 		const guildStatusChannel = await client.channels.cache.get(client.config.DiscordBot.PlayerStatus.channelCountID);
 
+		if (serverGuild === undefined || guildChannel === undefined || guildStatusChannel === undefined) {
+			if (serverGuild === undefined) {
+				throw console.error('Unable to get your Discord Server - Please verify that the config.jsonc is correctly configured!')
+			} if (guildChannel === undefined) {
+				console.error('Unable to get your Player Status Channel - Please verify that the config.jsonc is correctly configured!')
+			} if (guildStatusChannel === undefined) {
+				console.error('Unable to get your Player Status Count Channel - Please verify that the config.jsonc is correctly configured!')
+			}
+		}
+
 		await guildChannel.bulkDelete(1)
 		let statusEmbed = new client.discord.EmbedBuilder()
 			.setColor(0x0099FF)
@@ -117,7 +127,8 @@ module.exports = {
 		on('playerDropped', (reason) => {
 			playerCountNum--;
 			let playerActualDiscord = GetPlayerIdentifierByType(source, 'discord').substring(8)
-			delete client.players[playerActualDiscord];
+			let playerName = GetPlayerName(source);
+			delete client.players[playerName];
 			if (client.config.Debug === true) {
 				console.log(`[DEBUG] Player data: ${JSON.stringify(client.players)}`)
 			}
