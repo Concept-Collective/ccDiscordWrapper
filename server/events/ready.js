@@ -49,7 +49,10 @@ module.exports = {
 				if (client.config.General.IsServerUsingQBCore === true) {
 					playerDiscordID = client.QBCore.Functions.GetIdentifier(source, 'discord').substring(8)
 				} else {
-					playerDiscordID = GetPlayerIdentifierByType(source, 'discord').substring(8)
+					playerDiscordID = GetPlayerIdentifierByType(source, 'discord')
+					if(playerDiscordID) {
+						playerDiscordID = playerDiscordID.substring(8)
+					}
 				}
 				let playerName = GetPlayerName(source);
 				if (playerDiscordID) {
@@ -126,7 +129,10 @@ module.exports = {
 		})
 		on('playerDropped', (reason) => {
 			playerCountNum--;
-			let playerActualDiscord = GetPlayerIdentifierByType(source, 'discord').substring(8)
+			let playerActualDiscord = GetPlayerIdentifierByType(source, 'discord')
+			if(playerActualDiscord) {
+				playerActualDiscord = playerActualDiscord.substring(8)
+			}
 			let playerName = GetPlayerName(source);
 			delete client.players[playerName];
 			if (client.config.Debug === true) {
