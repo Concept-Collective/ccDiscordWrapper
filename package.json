@@ -8,7 +8,7 @@
       "@discordjs/collection": "1.5.1"
   },
   "dependencies": {
-    "discord.js": "14.10.2",
+    "discord.js": "14.11.0",
     "jsonc-parser": "^3.2.0",
     "node-fetch": ">=2.6.7 <3.0.0"
   }
