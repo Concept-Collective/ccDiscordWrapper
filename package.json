@@ -1,4 +1,12 @@
 {
+  "resolutions": {
+      "@discordjs/builders": "1.6.3",
+      "@discordjs/formatters": "0.3.1",
+      "@discordjs/util": "0.3.1",
+      "@discordjs/rest": "1.7.1",
+      "@discordjs/ws": "0.8.3",
+      "@discordjs/collection": "1.5.1"
+  },
   "dependencies": {
     "discord.js": "14.11.0",
     "jsonc-parser": "^3.2.0",
